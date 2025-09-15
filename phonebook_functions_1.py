@@ -1,0 +1,105 @@
+record_file = "personal_contact.txt"
+
+def create_contact():
+	print("=============================")
+	name = input("Enter Contact Name : ")
+	email = input("Enter Contact Email : ")
+	phone_number = input("Enter Contact Phone Number : ")
+	print("Contact Added Successfully")
+	print("=============================")
+	file=open(record_file,"a")
+	file.write("{},{},{}\n".format(name,email,phone_number))
+	file.close()
+
+def display_all_contact():
+	file = open(record_file,"r")
+	contact_records = file.readlines()
+	#print(contact_records)
+	file.close()
+
+	for contact in contact_records : 
+		#print(contact)
+		contact = contact.replace("\n","")
+		#print(contact)
+		contact_item = contact.split(",")
+		#print(contact_item)
+		print("=============================")
+		print("Name  : ",contact_item[0])
+		print("Email : ",contact_item[1])
+		print("Phone : ",contact_item[2])
+		print("=============================")
+
+		
+def search_contact():
+	file = open(record_file,"r")
+	contact_records = file.readlines()
+	#print(contact_records)
+	file.close()
+
+	search_term = input("Enter a valid Search Term : ")
+	for contact in contact_records : 
+		contact = contact.replace("\n","")
+		contact_item = contact.split(",")
+		if search_term in contact_item : 
+			print("=============================")
+			print("Name  : ",contact_item[0])
+			print("Email : ",contact_item[1])
+			print("Phone : ",contact_item[2])
+			print("=============================")
+			break
+	else : 
+		print("Contact not found")
+
+
+def update_contact():
+	file = open(record_file,"r")
+	contact_records = file.readlines()
+	file.close()
+
+	search_term = input("Enter a valid Search Term : ")
+	for contact in contact_records : 
+		contact = contact.replace("\n","")
+		contact_item = contact.split(",")
+		if search_term in contact_item : 
+			print("=============================")
+			print("Name  : ",contact_item[0])
+			print("Email : ",contact_item[1])
+			print("Phone : ",contact_item[2])
+			print("=============================")
+			current_contact = contact_item	
+			break
+	else : 
+		print("Contact not found")
+
+	update_contact = current_contact
+	current_contact_entry = "{},{},{}\n".format(current_contact[0],current_contact[1],current_contact[2])
+	change_choice = int(input("Press 1 to Change Name\nPress 2 to Change Email\nPress 3 to change Phone\nEnter valid change choice : "))
+	if change_choice == 1 : 
+		update_contact[0] = input("Enter New Name : ")
+	elif change_choice == 2 : 
+		update_contact[1] = input("Enter New Email : ")
+	elif change_choice == 3 : 
+		update_contact[2] = input("Enter New Phone : ")
+	else : 
+		print("Invalid choice")
+
+	update_contact_entry = "{},{},{}\n".format(update_contact[0],update_contact[1],update_contact[2])
+
+	#print("Before Change")
+	#print(contact_records)
+
+	change_index = contact_records.index(current_contact_entry)
+	contact_records[change_index] = update_contact_entry
+
+	#print("After Change")
+	#print(contact_records)
+	file = open(record_file,"w")
+	for i in contact_records :
+		file.write(i)
+	file.close()
+
+
+	print("Record Updated Successfully")
+			
+def delete_contact():
+	pass
